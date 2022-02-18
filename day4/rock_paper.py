@@ -26,8 +26,8 @@ while not quit:
     print("The computer chose %s" % input_map[int(computer_pick)])
 
     if (value == computer_pick):
-        print("DRAW")
+        print("--DRAW--")
     elif (value == '0' and computer_pick == '2') or (value == '1' and computer_pick == '0') or (value == '2' and computer_pick == '1'):
-        print("You WIN")
+        print("--You WIN--")
     else:
-        print("You LOSE")
+        print("--You LOSE--")
