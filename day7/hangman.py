@@ -1,7 +1,12 @@
 ####################
 # vars
 ####################
-word = 'massachusetts'
+from random import choice
+
+
+word_list = ['strawberry', 'friendship', 'everything', 'appreciate', 'motivation',
+             'dizzying', 'bedazzling', 'puzzlement', 'razzmatazz', 'jazzercise', 'squeezebox']
+word = choice(word_list)
 num_tries = 6
 try_count = 0
 tally = ['_' for _ in list(word)]
@@ -38,18 +43,18 @@ while try_count < num_tries:
     elif letter in matches:
         print("You already guessed %s" % letter)
     else:
+        matches.append(letter)
         if letter in word:
-            matches.append(letter)
             tally = adjust_tally(tally, letter)
             print("You have a match")
             if (word_complete(tally)):
-                print("You win.  Game over.")
+                print("You win.  Game over.\n")
                 exit(1)
         else:
-            print("Strike !!")
+            print("Strike !!\n")
             try_count += 1
-            print("%d tries left" % (num_tries - try_count))
+            print("%d tries left.\n\n" % (num_tries - try_count))
 
     print(tally)
 
-print("Game over.")
+print("Game over.  The word was %s." % word)
