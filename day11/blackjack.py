@@ -2,9 +2,8 @@
 # day11/blackjack.py
 # modification...ace can be 11 or 1
 ##############################
+import os
 import random
-
-from numpy import number
 
 card_values = {
     "2": 2, "3": 3, "4": 4, "5": 5,
@@ -63,6 +62,17 @@ def show_dealer_cards(cards):
     print(f"Dealer cards: {cards} = {calculate_hand_value(cards)}")
 
 
+def compare_hand(y, d):
+    yv = calculate_hand_value(y)
+    dv = calculate_hand_value(d)
+    if yv > dv and yv <= 21:
+        print("You win.")
+    elif dv > yv and dv <= 21:
+        print("Dealer wins.")
+    else:
+        print("Push.")
+
+
 def status(yours, dealers):
     print("==============================")
     show_your_cards(yours)
@@ -71,7 +81,8 @@ def status(yours, dealers):
 
 
 play = input("Do you want to play a game of Blackjack? (y/n): ")
-if play == 'y':
+while play == 'y':
+    os.system('clear')
     deck = new_deck()
     your_cards = []
     dealer_cards = []
@@ -106,13 +117,10 @@ if play == 'y':
         status(your_cards, dealer_cards)
 
         if calculate_hand_value(dealer_cards) > 21:
-            print("Dealer busted.  You win.")
-            exit(1)
+            print("Dealer busted.")
 
-    if calculate_hand_value(dealer_cards) > calculate_hand_value(your_cards):
-        print("Dealer wins.")
-    elif calculate_hand_value(dealer_cards) < calculate_hand_value(your_cards):
-        print("You win.")
-    else:
-        print("Push.")
-    exit(1)
+    compare_hand(your_cards, dealer_cards)
+
+    play = input("Play again?: ")
+
+print("Goodbye")
