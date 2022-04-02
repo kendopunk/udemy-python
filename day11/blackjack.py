@@ -41,6 +41,12 @@ def calculate_hand_value(cards):
         sum = 0
         for card in cards:
             sum += card_values[card]
+
+        num_aces = cards.count('A')
+        if num_aces > 0 and sum > 21:
+            while sum > 21:
+                sum -= 10
+
         return sum
 
 
