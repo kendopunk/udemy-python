@@ -85,23 +85,23 @@ def compare_hands(p, d):
 
     if is_blackjack(p):
         if is_blackjack(d):
-            print("Push.")
+            print("PUSH.")
         else:
-            print("You win.")
+            print("YOU WIN!")
     elif is_blackjack(d):
-        print("Dealer wins.")
+        print("DEALER WINS.")
     elif pv > dv:
         if pv > 21:
-            print("Dealer wins.")
+            print("DEALER WINS.")
         else:
-            print("You win.")
+            print("YOU WIN!")
     elif dv > pv:
         if dv > 21:
-            print("You win.")
+            print("YOU WIN!")
         else:
-            print("Dealer wins.")
+            print("DEALER WINS.")
     else:
-        print("Push.")
+        print("PUSH.")
 
 
 play = input("Do you want to play a game of Blackjack? (y/n): ")
@@ -122,10 +122,9 @@ while play == 'y':
         print("Blackjack!!!")
 
     # hit or stand
-    while(game_on and not player_busted and input("Type 'h' to hit or 's' to stay: ") == 'h'):
+    while(game_on and not player_busted and input("\nType 'h' to hit or 's' to stay: ") == 'h'):
         deck, card = deal_cards(deck, 1)
         player_cards.extend(card)
-        print("")
         show_cards("- You hit", player_cards, False)
         if (hand_value(player_cards) > 21):
             print("")
@@ -139,7 +138,7 @@ while play == 'y':
         deck, card = deal_cards(deck, 1)
         dealer_cards.extend(card)
         print("")
-        show_cards("Dealer hits", dealer_cards, False)
+        show_cards("- Dealer hits", dealer_cards, False)
         if (hand_value(dealer_cards) > 21):
             print("")
             print("- Dealer busted.")
@@ -148,6 +147,7 @@ while play == 'y':
     game_status(player_cards, dealer_cards, False)
     print("")
     compare_hands(player_cards, dealer_cards)
+    print("")
     play = input("Play again (y/n): ")
 
 print("Thanks for playing.  Goodbye.")
