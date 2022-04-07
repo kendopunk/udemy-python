@@ -4,7 +4,11 @@
 
 import random
 
-domain = range(1, 101)
+TURNS_EASY_LEVEL = 10
+TURNS_HARD_LEVEL = 5
+MAX_NUM = 100
+
+domain = range(1, MAX_NUM + 1)
 answer = random.choice(domain)
 difficulty = ''
 game_on = True
@@ -13,8 +17,8 @@ spot_on = False
 
 def max_tries(difficulty):
     if difficulty == 'h':
-        return 5
-    return 7
+        return TURNS_HARD_LEVEL
+    return TURNS_EASY_LEVEL
 
 
 def end_game():
@@ -43,7 +47,7 @@ def process_guess(guess, attempts):
 
 
 print("Welcome to the Number Guessing Game!")
-print("I'm thinking of a number between 1 and 100, inclusive.")
+print(f"I'm thinking of a number between 1 and {MAX_NUM}, inclusive.")
 while not difficulty == 'e' and not difficulty == 'h':
     difficulty = input("Choose a difficulty (e = easy / h = hard): ")
     tries = max_tries(difficulty)
