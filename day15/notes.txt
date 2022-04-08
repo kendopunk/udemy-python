@@ -1,0 +1,50 @@
+espresso
+  - 50ml H20
+  - 18g coffee
+  - $1.50
+
+latte
+  - 200ml water
+  - 24g coffee
+  - 150ml milk
+  - $2.50
+
+cappuccino
+  - 250ml water
+  - 24g coffee
+  - 100ml milk
+  - $3.00
+
+Tank:
+  300ml water
+  200ml milk
+  100g coffee
+
+penny, nickel, dime, quarter
+
+1) print resources report
+2) Check resources sufficient
+3) Process coins
+4) Check transaction successful
+5) Make the coffee, deduct the resources, add to the $$ count
+
+What would you like? (espresso/latte/cappucino).
+Type "r" for report or "q" to quit: 
+
+Water - 
+Milk - 
+Coffee - 
+Money - 
+
+Please insert coins.
+How many quarters?:  
+How many dimes?: 
+How many nickels?: 
+How many pennies?: 
+
+Here is {x} in change.
+Here is your "{y}" enjoy.
+
+Sorry, not enough water / coffee / milk
+
+Sorry, not enough money.  Money refunded.
