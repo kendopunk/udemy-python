@@ -16,7 +16,7 @@ MONEY = 'money'
 def get_selection():
     sel = 'X'
     while not sel in [ES, LT, CA, RPT, QT]:
-        print("What would you like? (espresso/latte/cappucino).")
+        print(f"What would you like? ({ES}/{LT}/{CA}).")
         sel = input(f"Type \"{RPT}\" for report or \"{QT}\" to quit: ")
 
     return sel
@@ -72,11 +72,11 @@ def explain_insufficient_resources(resources, selection):
 
     reasons = []
     if water_required > resources[WATER]:
-        reasons.append("Not enough water.")
+        reasons.append(f"Not enough water for {selection}.")
     if coffee_required > resources[COFFEE]:
-        reasons.append("Not enough coffee in the hopper.")
+        reasons.append(f"Not enough coffee in the hopper for {selection}.")
     if milk_required > resources[MILK]:
-        reasons.append("Not enough milk left.")
+        reasons.append(f"Not enough milk left for {selection}.")
 
     for reason in reasons:
         print(reason)
@@ -142,7 +142,7 @@ def coffee_machine():
         selection = get_selection()
         if selection == QT:
             running = False
-            print("Simulation complete.")
+            print("OK. Get back to work.")
         elif selection == RPT:
             show_report(resources)
         else:
@@ -167,7 +167,7 @@ def coffee_machine():
                     selection, payment, resources)
                 if change > 0:
                     print("Your change is %s" % "${:,.2f}".format(change))
-                print("Enjoy your caw-fee.")
+                print(f"Enjoy your {selection}.")
 
 
 coffee_machine()
