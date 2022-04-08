@@ -5,10 +5,6 @@ import os
 from art import logo, vs
 from game_data import data
 
-# control variables
-score = 0
-game_on = True
-
 
 def descriptor(mapElement):
     return ("%s, a %s from %s" %
@@ -35,24 +31,38 @@ def is_correct_choice(guess, a_followers, b_followers):
     return False
 
 
-while game_on:
-    a = choice(data)
-    b = choice(data)
-    print(logo)
-    print(f"Your score is {score}.")
-    comparison_statement('A', a)
-    print(vs)
-    comparison_statement('B', b)
+def choose_random_entity(data):
+    return choice(data)
 
-    guess = 'X'
-    while not guess == 'A' and not guess == 'B':
-        guess = input("Who has more followers? (A / B): ")
 
-    if is_correct_choice(guess, a["follower_count"], b["follower_count"]):
-        score = increment_score(score)
-        os.system('clear')
-    else:
-        game_on = False
-        print((50 * "="))
-        print(f"Game over.  Your score is {score}.")
-        print((50 * "="))
+def game():
+    score = 0
+    game_on = True
+    a = choose_random_entity(data)
+    b = choose_random_entity(data)
+
+    while game_on:
+        print(logo)
+        print(f"Your score is {score}.")
+        comparison_statement('A', a)
+        print(vs)
+        comparison_statement('B', b)
+
+        guess = 'X'
+        while not guess == 'A' and not guess == 'B':
+            guess = input("Who has more followers? (A / B): ")
+
+        if is_correct_choice(guess, a["follower_count"], b["follower_count"]):
+            score = increment_score(score)
+            if not guess == 'A':
+                a = b
+            b = choose_random_entity(data)
+            os.system('clear')
+        else:
+            game_on = False
+            print((50 * "="))
+            print(f"Game over.  Your score is {score}.")
+            print((50 * "="))
+
+
+game()
