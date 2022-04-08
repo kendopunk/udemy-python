@@ -60,6 +60,28 @@ def insufficient_resources(resources, selection):
     return True
 
 
+def explain_insufficient_resources(resources, selection):
+    match = MENU[selection]["ingredients"]
+
+    water_required = match[WATER]
+    coffee_required = match[COFFEE]
+    if MILK in match:
+        milk_required = match[MILK]
+    else:
+        milk_required = 0
+
+    reasons = []
+    if water_required > resources[WATER]:
+        reasons.append("Not enough water.")
+    if coffee_required > resources[COFFEE]:
+        reasons.append("Not enough coffee in the hopper.")
+    if milk_required > resources[MILK]:
+        reasons.append("Not enough milk left.")
+
+    for reason in reasons:
+        print(reason)
+
+
 def take_payment():
     print("Please insert coins.")
     quarters = input("How many quarters: ")
@@ -128,7 +150,7 @@ def coffee_machine():
             insufficient = insufficient_resources(resources, selection)
 
             if insufficient:
-                print(f"Not enough ingredients for {selection}.")
+                explain_insufficient_resources(resources, selection)
             else:
                 # show and get the cost
                 show_price(selection)
