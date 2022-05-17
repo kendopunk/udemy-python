@@ -35,4 +35,4 @@ df[PFC] = df[PFC].apply(converters[PFC])
 # aggregate by color, change column names, convert to CSV
 agg_by_color = df.groupby(PFC).size().reset_index(name='Count')
 agg_by_color.columns = ['Fur Color', 'Count']
-agg_by_color.to_csv("squirrel_count_by_color.csv")
+agg_by_color.to_csv("squirrel_count_by_color.csv", index=False)
