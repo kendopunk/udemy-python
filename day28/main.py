@@ -1,3 +1,4 @@
+import math
 import tkinter
 
 # ---------------------------- CONSTANTS ------------------------------- #
@@ -6,7 +7,7 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 0
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 CHECK_MARK = "✓"
@@ -23,34 +24,37 @@ def reset():
   canvas.itemconfig(countdown_value, text = v)
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
+def integer_to_mmss(i):
+  minutes = str(math.floor(i / 60)).zfill(2)
+  seconds = str(i %60).zfill(2)
+  return ":".join([minutes.zfill(2), seconds.zfill(2)])
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
-def countdown(timer_string):
+def countdown(value):
   global num_cycles, countdown_running
 
   if countdown_running:
-    parts = [int(x) for x in timer_string.split(":")]
-    minutes = parts[0]
-    seconds = parts[1]
-
-    if minutes == 0 and seconds == 0:
-      new_timer = '00:00'
+    if value == 0:
       num_cycles = num_cycles + 1
       canvas.itemconfig(checks, text = num_cycles * CHECK_MARK)
-      countdown_running = False
-    elif seconds == 0:
-      new_timer = str(minutes - 1).zfill(2) + ':10'
-    else:
-      new_timer = str(minutes).zfill(2) + ':' + str(seconds - 1).zfill(2)
 
-    canvas.itemconfig(countdown_value, text = new_timer)
-    window.after(1000, countdown, new_timer)
+      if num_cycles % 4 == 0:
+        value = LONG_BREAK_MIN * 60
+      else:
+        value = SHORT_BREAK_MIN * 60
+
+      canvas.itemconfig(countdown_value, text = integer_to_mmss(value))
+    else:
+      value = value - 1
+      canvas.itemconfig(countdown_value, text = integer_to_mmss(value))
+    
+    window.after(1000, countdown, value)
 
 def start():
   global countdown_running
   countdown_running = True
-  v = str(WORK_MIN) + ':10'
-  canvas.itemconfig(countdown_value, text = v)
+  v = WORK_MIN * 60
+  canvas.itemconfig(countdown_value, text = integer_to_mmss(v))
   countdown(v)
 
 
@@ -70,23 +74,23 @@ canvas.create_image(canvas_width/2, canvas_height/2, image=img)
 
 # timer / countdown value
 countdown_value = canvas.create_text(canvas_width/2, canvas_height/2 + 25, text = "00:00", fill="#fff", font=(FONT_NAME, 35, "bold"))
-canvas.grid(column = 2, row=1)
+canvas.grid(column = 1, row=1)
 
-# "Timer" (0, 1)
+# "Timer" label
 timer_label = tkinter.Label(text="Timer", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 35))
-timer_label.grid(column=2, row=0);
+timer_label.grid(column=1, row=0);
 
 # start button
 start_button = tkinter.Button(text="Start", bg=YELLOW, border=0, padx=4, pady=4, highlightthickness=0, command=(start))
-start_button.grid(column =0, row = 2)
+start_button.grid(column = 0, row = 2)
 
 # reset button
 reset_button = tkinter.Button(text = "Reset", bg=YELLOW, border=0, padx=4, pady=4, highlightthickness=0, command=reset)
-reset_button.grid(column=3, row=2)
+reset_button.grid(column=2, row = 2)
 
 # check marks
-checks = canvas.create_text(canvas_width/2, canvas_height - 25, text = "DFD", fill=GREEN, font=(FONT_NAME, 22))
-canvas.grid(column=2, row=4)
+checks = canvas.create_text(canvas_width/2, canvas_height - 25, text = "", fill=GREEN, font=(FONT_NAME, 22))
+canvas.grid(column=1, row=2)
 
 
 # always has to be at the bottom of the program
